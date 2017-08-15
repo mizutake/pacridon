@@ -27,8 +27,13 @@ class Collection {
     let sqlParts = [`SELECT * FROM ??`];
     let sqlValues = [this.klass.tableName()];
     if(Object.keys(this._where).length > 0) {
-      sqlParts.push('WHERE ?');
-      sqlValues.push(this._where);
+      sqlParts.push('WHERE');
+      let wheres = [];
+      Object.keys(this._where).forEach((key) => {
+        wheres.push('?? = ?')
+        sqlValues.push(key, this._where[key]);
+      })
+      sqlParts.push(wheres.join(' AND '));
     }
     return new Promise((resolve, reject) => {
       db.query(sqlParts.join(' '), sqlValues).then((result) =>　{

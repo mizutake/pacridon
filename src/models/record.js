@@ -27,7 +27,11 @@ class Record {
   }
 
   constructor(data) {
-    this.data = data;
+    this.data = {};
+    this.constructor.columns().forEach((column) => {
+      this.data[column] = data[column];
+    });
+  this.data.id = data.id
   }
 
   save() {

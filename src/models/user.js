@@ -8,7 +8,7 @@ class User extends Record{
     return "users";
   }
   static columns() {
-    return ["nickname"];
+    return ["nickname","password","email","salt"];
   }
   toots() {
     return (new Collection(Toot)).where({ user_id: this.data.id }); 
