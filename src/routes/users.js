@@ -1,5 +1,7 @@
 const crypto = require('crypto');
 const User = require('../models/user');
+const UserSession = require('../models/user_session');
+
 module.exports = function (app) {
   app.get('/signup', function (req, res) {
     res.render('signup');
@@ -51,6 +53,16 @@ module.exports = function (app) {
       if (hash !== user.data.password) {
         throw new Error("Password is not match");
       }
+
+      let session = new UserSession({ user_id: user.data.id});
+      return session.save();
+    }).then((session) => {
+      res.cookie('session_id', session.data.id, {
+        path: "/",
+        httpOnly: true,
+        expires: new Date(Date.now() + (1000 * 60 * 60 * 24 * 30)),
+        signed: true
+      });
 
       res.redirect("/");
     }).catch((err) => {
