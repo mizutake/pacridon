@@ -11,7 +11,16 @@ module.exports = function(app) {
       rea.redirect('./login');
       return;
     }
-    res.render('timeline')
+    UserSession.find(req.signedCookies.session_id).then((session) => {
+      return User.find(session.data.user_id);
+    }).then((user) => {
+      return user.toots();
+    }).then((toots) => {
+      res.render('timeline', { toots: toots });
+    }).catch((err) => {
+      console.log(err);
+      res.render('timeline', { error: true });
+    });
   });
 
   app.post('/new_toot', function(req, res) {

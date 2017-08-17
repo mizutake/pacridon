@@ -8,4 +8,8 @@ block content
         .form-group
           textarea.form-control(name="toot" placeholder="今何してる？" requirerd)
         .form-group
-          input.btn.btn-primary.btn-lg(type="submit" value="toot!")
+          input.btn.btn-primary.btn-lg.btn-block(type="submit" value="toot!")
+      .panel-group
+        each toot in toots.reverse()
+          .panel.panel-default
+            .panel-body= toot.data.body
