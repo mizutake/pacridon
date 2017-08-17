@@ -13,6 +13,10 @@ class UserSession extends Record {
     return ["id", "user_id"];
   }
 
+  static create(user) {
+    return new this({ user_id: user.data.id }).save();
+  }
+
   insert() {
     this.data.id = UUID();
     return super.insert();

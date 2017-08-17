@@ -32,7 +32,30 @@ class User extends Record{
     })
     })
   } 
-  
+
+  static authenticate(email, rae_password) {
+     return new Promise((resolve, reject) => {
+      this.collection().where({ email: email }).then((users) => {
+        if (users.length < 1) {
+          throw new Error("User not found");
+        }
+        let user = users[0];
+        let salt = user.data.salt;
+        let sha512 = crypto.createHash('sha512');
+        sha512.update(salt);
+        sha512.update(rae_password);
+        let hashed_password = sha512.digest('hex');
+
+        if (hashed_password !== user.data.password) {
+          throw new Error("Password is not match");
+        }
+        resolve(user);
+      }).catch((err) => {
+        reject(err);
+      });
+    });
+  }
+
   toots() {
     return (new Collection(Toot)).where({ user_id: this.data.id }); 
   }
