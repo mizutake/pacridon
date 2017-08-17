@@ -1,0 +1,11 @@
+extends layout.pug
+block head
+  title タイムライン
+block content
+  .row
+    .col-md-6.col-md-offset-3
+      form(action="/new_toot" method="post")
+        .form-group
+          textarea.form-control(name="toot" placeholder="今何してる？" requirerd)
+        .form-group
+          input.btn.btn-primary.btn-lg(type="submit" value="toot!")

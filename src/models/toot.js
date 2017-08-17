@@ -8,6 +8,10 @@ class Toot extends Record {
   static columns() {
     return [`user_id`, `body`];
   }
+
+  static create(user, body) {
+    return new this({ user_id: user.data.id, body: body }).save();
+  }
 }
 
 module.exports = Toot;
