@@ -7,27 +7,15 @@ module.exports = function (app) {
     res.render('signup');
   });
 
-  app.post("/signup", function (req, res) {
+  app.post('/signup', function (req, res) {
     let email = req.body.email;
     let nickname = req.body.nickname;
     let password = req.body.password;
-    let salt = crypto.randomBytes(8).toString('hex');
-    let sha512 = crypto.createHash('sha512');
-    sha512.update(salt);
-    sha512.update(password);
-    let hash = sha512.digest('hex');
-
-    let user = new User({
-      nickname: nickname,
-      email: email,
-      password: hash,
-      salt: salt
-    });
-    user.save().then(() => {
-      res.redirect(302, '/login');
-    }, error => {
-      console.error(error);
-      res.status(409).send('Nickname または E-mailアドレスが重複しています')
+    User.create(nickname, email, password).then((user) => {
+      res.redirect('/login');
+    }).catch((err) => {
+      console.log(err);
+      res.render("signup", { error: true });
     })
   });
 
