@@ -17,7 +17,8 @@ const bodyParser = require('body-parser');
 app.use(bodyParser.urlencoded({ extended: true }));
 
 app.locals.db = require('./db');
-
+const filter = require('./filters');
+  filter(app);
 const routes = require('./routes');
 routes(app);
 
