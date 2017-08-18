@@ -1,8 +1,10 @@
 const express = require('express');
 let app = express();
 
-// Middleware settings
+const expressWs = require('express-ws');
+expressWs(app);
 
+// Middleware settings
 const path = require('path');
 app.set('view engine', 'pug');
 app.set('views', path.join(__dirname, 'views'));

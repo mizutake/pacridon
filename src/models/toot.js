@@ -1,5 +1,6 @@
 const db = require('../db');
 const Record = require('./record');
+const redis = require('../redis');
 
 class Toot extends Record {
   static tableName() {
@@ -11,6 +12,19 @@ class Toot extends Record {
 
   static create(user, body) {
     return new this({ user_id: user.data.id, body: body }).save();
+  }
+
+  insert() {
+    let insertPromise = super.insert();
+    return new Promise((resolve, reject) => {
+      insertPromise.then((toot) => {
+        let conn =  redis();
+        conn.publish('local',this.toJSON());
+        resolve(toot);
+      }).catch((error) => {
+        reject(error);
+      })
+    });
   }
 }
 

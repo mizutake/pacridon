@@ -7,11 +7,11 @@ const UserSession = require('../models/user_session');
 module.exports = function(app) {
 
   app.get("/", function(req, res) {
-    if(!res.locale.currentUser) {
-      rea.redirect('./login');
+    if(!res.locals.currentUser) {
+      res.redirect('./login');
       return;
     }
-    res.locale.currentUser.toots().then((toots) => {
+    res.locals.currentUser.toots().then((toots) => {
       res.render('timeline', { toots: toots });
     }).catch((err) => {
       console.log(err);
@@ -20,12 +20,12 @@ module.exports = function(app) {
   });
 
   app.post('/new_toot', function(req, res) {
-   if(!res.locale.currentUser) {
+   if(!res.locals.currentUser) {
      res.redirect("/login");
     return
    }
 
-   Toot.create(res.locale.currentUser, req.body.toot).then(()=> {
+   Toot.create(res.locals.currentUser, req.body.toot).then(()=> {
      res.redirect('/');
    }).catch((err) => {
      console.log(err);
@@ -34,5 +34,6 @@ module.exports = function(app) {
   });
 
   require('./users')(app);
+  require('./api')(app);
 };
 
