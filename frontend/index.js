@@ -1,5 +1,1 @@
-class Animal {
-
-}
-
-let animal =new animal;
+require('./views');

@@ -11,27 +11,10 @@ module.exports = function(app) {
       res.redirect('./login');
       return;
     }
-    res.locals.currentUser.toots().then((toots) => {
-      res.render('timeline', { toots: toots });
-    }).catch((err) => {
-      console.log(err);
-      res.render('timeline', { error: true });
+  
+      res.render('timeline');
     });
-  });
-
-  app.post('/new_toot', function(req, res) {
-   if(!res.locals.currentUser) {
-     res.redirect("/login");
-    return
-   }
-
-   Toot.create(res.locals.currentUser, req.body.toot).then(()=> {
-     res.redirect('/');
-   }).catch((err) => {
-     console.log(err);
-     res.redirect('/');
-   })
-  });
+  
 
   require('./users')(app);
   require('./api')(app);
