@@ -7,7 +7,7 @@ class Toot extends Record {
     return "toots";
   }
   static columns() {
-    return [`user_id`, `body`];
+    return [`user_id`, `body`, `created_at`, `updated_at`];
   }
 
   static create(user, body) {
@@ -49,7 +49,7 @@ class Toot extends Record {
       }).catch((error) => {
         resolve(error);
       });
-    });
+    })
   }
 }
 

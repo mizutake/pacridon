@@ -50,6 +50,9 @@ domready(function() {
           }).catch((error) => {
             console.error(error);
           })
+        },
+        formatTime(time) {
+          return new Date(time).toLocaleString();
         }
        }
     });

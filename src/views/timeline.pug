@@ -15,4 +15,4 @@ block content
               .pull-right 
                 button.btn.btn-danger.btn-xs(v-on:click="deleteToot($event, toot.id)")
                   i.glyphicon.glyphicon-trash
-              | {{ toot.body }}
+              | {{ toot.body }}　{{ formatTime(toot.created_at) }}
