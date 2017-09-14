@@ -11,8 +11,11 @@ block content
           input.btn.btn-primary.btn-lg.btn-block(type="submit" value="toot!")
       #toots
           .media(v-for="toot in toots")
-            .media-body 
-              .pull-right 
-                button.btn.btn-danger.btn-xs(v-on:click="deleteToot($event, toot.id)")
-                  i.glyphicon.glyphicon-trash
-              | {{ toot.body }}　{{ formatTime(toot.created_at) }}
+            .panel.panel-default(class="panel-heading")
+              .media-body 
+                .pull-right 
+                  button.btn.btn-danger.btn-xs(v-on:click="putToot($event, toot.id)")
+                    i.glyphicon.glyphicon-pencil
+                  button.btn.btn-danger.btn-xs(v-on:click="deleteToot($event, toot.id)")
+                      i.glyphicon.glyphicon-trash
+                | {{ toot.body }}　{{ formatTime(toot.created_at) }}

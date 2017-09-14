@@ -73,6 +73,7 @@ domready(function() {
       switch(message.action) {
         case "create":
         vm.toots.unshift(message.toot);
+        console.dir(message.toot);
         break;
         case "delete":
         vm.deleteToot(null,message.toot.id);

@@ -28,6 +28,24 @@ module.exports = function(app) {
     });
   });
 
+  app.put('/api/toots/:id', function(req,res) {
+    if(!res.locals.currentUser) {
+      res.status(401).json({ "error": "Unauthorized" });
+      return;
+    }
+    res.locals.currentUser.toots().where({
+      id: req.params.id
+    }).then((toots) => {
+      if(toots.length > 0) {
+        toots[0].data.body = req.body.toot;
+        toots[0].save();
+      }
+      res.status(200).end();
+    }).catch((error) => {
+      res.status(500).json({ "error": error.toString() });
+    })
+  });
+
   app.delete('/api/toots/:id', function(req, res) {
     if(!res.locals.currentUser) {
       res.status(401).json({ "error": "Unauthorized" });

@@ -18,6 +18,8 @@ class Toot extends Record {
     let insertPromise = super.insert();
     return new Promise((resolve, reject) => {
       insertPromise.then((toot) => {
+        this.data.created_at = new Date()
+        console.log(this)
         let conn =  redis();
         conn.publish(
           'local',
