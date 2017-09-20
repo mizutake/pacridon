@@ -12,10 +12,12 @@ block content
       #toots
           .media(v-for="toot in toots")
             .panel.panel-default(class="panel-heading")
-              .media-body 
-                .pull-right 
-                  button.btn.btn-danger.btn-xs(v-on:click="putToot($event, toot.id)")
+              .pull-right
+                button.btn.btn-danger.btn-xs(v-on:click="putToot($event, toot.id)")
                     i.glyphicon.glyphicon-pencil
-                  button.btn.btn-danger.btn-xs(v-on:click="deleteToot($event, toot.id)")
+                button.btn.btn-danger.btn-xs(v-on:click="deleteToot($event, toot.id)")
                       i.glyphicon.glyphicon-trash
-                | {{ toot.body }}　{{ formatTime(toot.created_at) }}
+              .toot-body(contenteditable="false")
+                | {{ toot.body }}
+              .toot-date
+                | {{ formatTime(toot.created_at) }}
